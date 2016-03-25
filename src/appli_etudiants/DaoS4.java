@@ -5,6 +5,8 @@
  */
 package appli_etudiants;
 
+import appli_etudiants.CV_element.Cv_centre_interet;
+import appli_etudiants.CV_element.Cv_photo;
 import appli_etudiants.Personne;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
@@ -23,6 +25,8 @@ public class DaoS4 {
 
     static private Dao<Personne, String> personneDao;
     static private Dao<Etudiants, String> etudiantsDao;
+    static private Dao<Cv_photo, String> photoDao;
+    static private Dao<Cv_centre_interet, String> interetDao;
     static private ConnectionSource connectionSource;
     static private String databaseUrl;
     static DaoS4 monDaoS4;
@@ -33,6 +37,8 @@ public class DaoS4 {
             DaoS4.connectionSource = new JdbcConnectionSource(DaoS4.databaseUrl);
             DaoS4.personneDao = DaoManager.createDao(connectionSource, Personne.class);
             DaoS4.etudiantsDao = DaoManager.createDao(connectionSource, Etudiants.class);
+            DaoS4.photoDao = DaoManager.createDao(connectionSource, Cv_photo.class);
+            DaoS4.interetDao = DaoManager.createDao(connectionSource, Cv_centre_interet.class);
         } catch (SQLException ex) {
             Logger.getLogger(DaoS4.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -51,4 +57,18 @@ public class DaoS4 {
         }
         return DaoS4.etudiantsDao;
     }
+     
+     public static Dao<Cv_photo, String> photoDao(){
+         if (DaoS4.monDaoS4 == null) {
+            DaoS4.monDaoS4 = new DaoS4();
+        }
+        return DaoS4.photoDao;
+     }
+     
+     public static Dao<Cv_centre_interet, String> interetDao(){
+         if (DaoS4.monDaoS4 == null) {
+            DaoS4.monDaoS4 = new DaoS4();
+        }
+        return DaoS4.interetDao;
+     }
 }

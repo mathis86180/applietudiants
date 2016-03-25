@@ -175,13 +175,16 @@ public class Connexion extends javax.swing.JDialog {
                 // ici on appelle md5 membre static de la classe outils
                 mdp=Outils.md5(mdp);
             
-                ResultSet lignesRetournees=requete.executeQuery("select * from Utilisateurs where identifiant='"+identifiant+"' and mot_de_passe='"+mdp+"'");
+                ResultSet lignesRetournees=requete.executeQuery("select * from Utilisateurs where identifiant='"+identifiant
+                        +"' and mot_de_passe='"+mdp+"'");
                 if (lignesRetournees.next()){
-                    String nom=lignesRetournees.getString("nom");
+                    //modifier ligne du dessous avec un objet etudiants
+                    Etudiants etudiant = DaoS4.etudiantsDao().queryForId(identifiant);
+                    
                     //Modifications de la Mission 2 à placer ici
                     
                     
-                    this.fenetre.connecte(nom);
+                    this.fenetre.connecte(etudiant);
                     this.setVisible(false);
                     this.fenetre.majConnexion();
                     

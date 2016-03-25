@@ -4,6 +4,16 @@
  */
 package appli_etudiants;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -11,12 +21,13 @@ import javax.swing.JOptionPane;
  * @author nc
  */
 public class InterfaceGraphique extends javax.swing.JFrame {
+
     /**
      * attribut qui indique si l'etudiant est connecté ou non
      */
     private boolean connecte;
     private Etudiants infoEtudiant;
-    
+
     /**
      * interface graphique
      */
@@ -26,12 +37,12 @@ public class InterfaceGraphique extends javax.swing.JFrame {
 
     /**
      * constructeur : Creates new form InterfaceGraphique
-     * 
+     *
      */
     public InterfaceGraphique() {
         initComponents();
         //par defaut, la connexion est inactive
-        this.connecte=false;
+        this.connecte = false;
         //element du menu de deconnexion grisé
         this.majConnexion();
         //centrage
@@ -52,12 +63,28 @@ public class InterfaceGraphique extends javax.swing.JFrame {
 
         jMenuItem1 = new javax.swing.JMenuItem();
         desktopPane = new javax.swing.JDesktopPane();
+        jPanel1 = new javax.swing.JPanel();
+        jLabelSortie = new javax.swing.JLabel();
+        jLabelNaiss = new javax.swing.JLabel();
+        jLabelRue = new javax.swing.JLabel();
+        jLabelPostal = new javax.swing.JLabel();
+        jLabelMail = new javax.swing.JLabel();
+        jLabelWeb = new javax.swing.JLabel();
+        jLabelEntree = new javax.swing.JLabel();
+        jLabelVille = new javax.swing.JLabel();
+        jLabelTelPerso = new javax.swing.JLabel();
+        jLabelTelPro = new javax.swing.JLabel();
+        jLabelNom = new javax.swing.JLabel();
+        jLabelPrenom = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
         nomMenuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         connexionMenuItem = new javax.swing.JMenuItem();
         deconnexionMenuItem = new javax.swing.JMenuItem();
         SortieMenuItem = new javax.swing.JMenuItem();
         jMenuInscription = new javax.swing.JMenuItem();
+        jMenuModification = new javax.swing.JMenuItem();
+        jMenuSuppr = new javax.swing.JMenuItem();
         aideMenu = new javax.swing.JMenu();
         aproposMenuItem = new javax.swing.JMenuItem();
         nomjMenu = new javax.swing.JMenu();
@@ -67,6 +94,96 @@ public class InterfaceGraphique extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         desktopPane.setBorder(new javax.swing.border.MatteBorder(null));
+
+        jLabelSortie.setText("Année sortie promotion");
+
+        jLabelNaiss.setText("Date de naissance");
+
+        jLabelRue.setText("Adresse rue");
+
+        jLabelPostal.setText("Code postal");
+
+        jLabelMail.setText("Mail");
+
+        jLabelWeb.setText("Site web");
+
+        jLabelEntree.setText("Année entrée promotion");
+
+        jLabelVille.setText("Ville");
+
+        jLabelTelPerso.setText("Téléphone personnel");
+
+        jLabelTelPro.setText("Téléphone professionnel");
+
+        jLabelNom.setText("Nom");
+
+        jLabelPrenom.setText("Prénom");
+
+        org.jdesktop.layout.GroupLayout jPanel1Layout = new org.jdesktop.layout.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(jPanel1Layout.createSequentialGroup()
+                .add(100, 100, 100)
+                .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                    .add(jLabelSortie)
+                    .add(jLabelEntree)
+                    .add(jLabelWeb)
+                    .add(jLabelMail)
+                    .add(jLabelTelPro)
+                    .add(jLabelNaiss)
+                    .add(jLabelVille)
+                    .add(jLabelPostal)
+                    .add(jLabelTelPerso)
+                    .add(jLabelRue))
+                .addContainerGap(123, Short.MAX_VALUE))
+            .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                .add(jPanel1Layout.createSequentialGroup()
+                    .add(101, 101, 101)
+                    .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                        .add(jLabelNom)
+                        .add(jLabelPrenom))
+                    .addContainerGap(203, Short.MAX_VALUE)))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(jPanel1Layout.createSequentialGroup()
+                .add(52, 52, 52)
+                .add(jLabelNaiss)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(jLabelRue)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(jLabelPostal)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(jLabelVille)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(jLabelTelPerso)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(jLabelTelPro)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(jLabelMail)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(jLabelWeb, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 14, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(jLabelEntree)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(jLabelSortie)
+                .addContainerGap(44, Short.MAX_VALUE))
+            .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                .add(jPanel1Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .add(jLabelNom)
+                    .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                    .add(jLabelPrenom)
+                    .addContainerGap(245, Short.MAX_VALUE)))
+        );
+
+        desktopPane.add(jPanel1);
+        jPanel1.setBounds(70, 40, 340, 290);
+
+        jLabel1.setText("Voici les informations vous concernant");
+        desktopPane.add(jLabel1);
+        jLabel1.setBounds(100, 10, 340, 14);
 
         fileMenu.setMnemonic('f');
         fileMenu.setText("Etudiants");
@@ -109,6 +226,22 @@ public class InterfaceGraphique extends javax.swing.JFrame {
         });
         fileMenu.add(jMenuInscription);
 
+        jMenuModification.setText("Modification");
+        jMenuModification.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuModificationActionPerformed(evt);
+            }
+        });
+        fileMenu.add(jMenuModification);
+
+        jMenuSuppr.setText("Suppression");
+        jMenuSuppr.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuSupprActionPerformed(evt);
+            }
+        });
+        fileMenu.add(jMenuSuppr);
+
         nomMenuBar.add(fileMenu);
 
         aideMenu.setMnemonic('h');
@@ -128,15 +261,13 @@ public class InterfaceGraphique extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(layout.createSequentialGroup()
-                .add(desktopPane, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 495, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .add(0, 0, Short.MAX_VALUE))
+            .add(desktopPane, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 481, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(layout.createSequentialGroup()
-                .add(desktopPane, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 309, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .add(0, 0, Short.MAX_VALUE))
+                .add(desktopPane, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 359, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -148,45 +279,89 @@ public class InterfaceGraphique extends javax.swing.JFrame {
 
     private void connexionMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_connexionMenuItemActionPerformed
         // TODO add your handling code here:
-       
+
         /**
-         * création de la fenetre de connexion et attachement de cette dernière à l'interface
-         * maj de connecte en retour
-        */
-        this.fenConnexion=new Connexion(this, true);
+         * création de la fenetre de connexion et attachement de cette dernière
+         * à l'interface maj de connecte en retour
+         */
+        this.fenConnexion = new Connexion(this, true);
         this.fenConnexion.setVisible(true);
-        
+
         //JOptionPane.showMessageDialog(this, "cc");
     }//GEN-LAST:event_connexionMenuItemActionPerformed
 
     private void deconnexionMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deconnexionMenuItemActionPerformed
         // TODO add your handling code here:
-        fenDeconnexion=new Deconnexion(this, true);
+        fenDeconnexion = new Deconnexion(this, true);
         this.fenDeconnexion.setVisible(true);
     }//GEN-LAST:event_deconnexionMenuItemActionPerformed
 
     private void jMenuInscriptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuInscriptionActionPerformed
-         fenInscription=new Inscription(this, true);
+        fenInscription = new Inscription(this, true);
         this.fenInscription.setVisible(true);
     }//GEN-LAST:event_jMenuInscriptionActionPerformed
-    public void connecte(String leNom){
+
+    private void jMenuModificationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuModificationActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuModificationActionPerformed
+
+    private void jMenuSupprActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuSupprActionPerformed
+        try {
+            Etudiants testInfo = DaoS4.etudiantsDao().queryForId(infoEtudiant.getLogin());
+            DaoS4.etudiantsDao().delete(testInfo);
+        } catch (SQLException ex) {
+            Logger.getLogger(InterfaceGraphique.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        deconnecte();
+        majConnexion();
+
+    }//GEN-LAST:event_jMenuSupprActionPerformed
+    public void connecte(Etudiants etudiant) {
         //maj de l'etat de la connexion
-        this.connecte=true;
+        this.connecte = true;
         //ajout du nom dans la fenetre
-        this.nomjMenu.setText("Connecté en tant que : "+leNom);
+        this.nomjMenu.setText("Connecté en tant que : " + etudiant.getLogin());
         this.nomjMenu.setEnabled(false);
-        
-        
+        jLabelEntree.setText(etudiant.getAnnee_entree_promo());
+        jLabelNaiss.setText(etudiant.getDate_de_naissance());
+        jLabelNom.setText(etudiant.getNom());
+        jLabelPostal.setText(etudiant.getAdresse_cp());
+        jLabelPrenom.setText(etudiant.getPrenom());
+        jLabelTelPro.setText(etudiant.getTel_professionnel());
+        jLabelRue.setText(etudiant.getAdresse_rue());
+        jLabelMail.setText(etudiant.getCourriel());
+        jLabelSortie.setText(etudiant.getAnnee_sortie_promo());
+        jLabelTelPerso.setText(etudiant.getTel_personnel());
+        jLabelVille.setText(etudiant.getAdresse_ville());
+        jLabelWeb.setText(etudiant.getSite_web());
+        infoEtudiant = etudiant;
     }
-    public void deconnecte(){
-        this.connecte=false;
+
+    public void deconnecte() {
+        this.connecte = false;
         this.nomjMenu.setText(null);
+        jLabelEntree.setText("Année entrée promotion");
+        jLabelNaiss.setText("Date de naissance");
+        jLabelNom.setText("Nom");
+        jLabelPostal.setText("Code postal");
+        jLabelPrenom.setText("Prénom");
+        jLabelTelPro.setText("Téléphone professionnel");
+        jLabelRue.setText("Adresse rue");
+        jLabelMail.setText("Mail");
+        jLabelSortie.setText("Année sortie promotion");
+        jLabelTelPerso.setText("Téléphone personnel");
+        jLabelVille.setText("Ville");
+        jLabelWeb.setText("Site web");
+        jMenuModification.setEnabled(false);
     }
-    public void majConnexion(){
+
+    public void majConnexion() {
         deconnexionMenuItem.setEnabled(this.connecte);
         connexionMenuItem.setEnabled(!this.connecte);
+        jMenuSuppr.setEnabled(connecte);
+        jMenuModification.setEnabled(connecte);
     }
-    
+
     /**
      * @param args the command line arguments
      */
@@ -229,8 +404,24 @@ public class InterfaceGraphique extends javax.swing.JFrame {
     private javax.swing.JMenuItem deconnexionMenuItem;
     private javax.swing.JDesktopPane desktopPane;
     private javax.swing.JMenu fileMenu;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabelEntree;
+    private javax.swing.JLabel jLabelMail;
+    private javax.swing.JLabel jLabelNaiss;
+    private javax.swing.JLabel jLabelNom;
+    private javax.swing.JLabel jLabelPostal;
+    private javax.swing.JLabel jLabelPrenom;
+    private javax.swing.JLabel jLabelRue;
+    private javax.swing.JLabel jLabelSortie;
+    private javax.swing.JLabel jLabelTelPerso;
+    private javax.swing.JLabel jLabelTelPro;
+    private javax.swing.JLabel jLabelVille;
+    private javax.swing.JLabel jLabelWeb;
     private javax.swing.JMenuItem jMenuInscription;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuModification;
+    private javax.swing.JMenuItem jMenuSuppr;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JMenuBar nomMenuBar;
     private javax.swing.JMenu nomjMenu;
     // End of variables declaration//GEN-END:variables
