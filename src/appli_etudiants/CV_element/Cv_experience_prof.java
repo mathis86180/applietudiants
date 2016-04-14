@@ -5,6 +5,7 @@
  */
 package appli_etudiants.CV_element;
 
+import appli_etudiants.Etudiants;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
@@ -20,6 +21,8 @@ public class Cv_experience_prof {
     private String id_utilisateur;
     @DatabaseField
     private String libelle_experience_prof;
+    @DatabaseField(foreign = true,columnName = "id_utilisateur", foreignAutoRefresh = false)
+    private Etudiants etudiant;
 
     public Integer getId_experience_prof() {
         return id_experience_prof;
@@ -44,6 +47,16 @@ public class Cv_experience_prof {
     public void setLibelle_experience_prof(String libelle_experience_prof) {
         this.libelle_experience_prof = libelle_experience_prof;
     }
+
+    public Etudiants getEtudiant() {
+        return etudiant;
+    }
+
+    public void setEtudiant(Etudiants etudiant) {
+        this.etudiant = etudiant;
+    }
+    
+    
     
     
 }

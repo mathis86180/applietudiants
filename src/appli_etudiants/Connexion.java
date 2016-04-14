@@ -4,6 +4,7 @@
  */
 package appli_etudiants;
 
+import appli_etudiants.formulaire.Inscription;
 import com.mysql.jdbc.Connection;
 import com.sun.org.apache.xpath.internal.axes.SelfIteratorNoPredicate;
 import java.awt.Frame;

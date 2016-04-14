@@ -4,17 +4,14 @@
  */
 package appli_etudiants;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
+import appli_etudiants.CV_element.Cv_formation;
+import appli_etudiants.CV_element.Cv_titre;
+import appli_etudiants.formulaire.Formation_formulaire;
+import appli_etudiants.formulaire.Inscription;
+import appli_etudiants.formulaire.PanneauPhoto;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -27,13 +24,17 @@ public class InterfaceGraphique extends javax.swing.JFrame {
      */
     private boolean connecte;
     private Etudiants infoEtudiant;
-
+    
     /**
      * interface graphique
      */
     private Connexion fenConnexion;
     private Deconnexion fenDeconnexion;
     private Inscription fenInscription;
+    
+    private CVetudiant fenCV;
+    private Formation_formulaire fenForm;
+    private PanneauPhoto panneauPhoto;
 
     /**
      * constructeur : Creates new form InterfaceGraphique
@@ -49,8 +50,9 @@ public class InterfaceGraphique extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         //titre 
         this.setTitle("Gestion des étudiants du bts sio");
-
     }
+   
+   
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -64,19 +66,35 @@ public class InterfaceGraphique extends javax.swing.JFrame {
         jMenuItem1 = new javax.swing.JMenuItem();
         desktopPane = new javax.swing.JDesktopPane();
         jPanel1 = new javax.swing.JPanel();
-        jLabelSortie = new javax.swing.JLabel();
-        jLabelNaiss = new javax.swing.JLabel();
-        jLabelRue = new javax.swing.JLabel();
-        jLabelPostal = new javax.swing.JLabel();
-        jLabelMail = new javax.swing.JLabel();
-        jLabelWeb = new javax.swing.JLabel();
-        jLabelEntree = new javax.swing.JLabel();
-        jLabelVille = new javax.swing.JLabel();
-        jLabelTelPerso = new javax.swing.JLabel();
-        jLabelTelPro = new javax.swing.JLabel();
-        jLabelNom = new javax.swing.JLabel();
-        jLabelPrenom = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
+        jButtonAccesCV = new javax.swing.JButton();
+        jTextFieldRue = new javax.swing.JTextField();
+        jTextFieldMotDePasse = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        jTextFieldTelPerso = new javax.swing.JTextField();
+        jTextFieldMail = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        jTextFieldTelPro = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        jTextFieldAnneEntree = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        jTextFieldVille = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        jTextFieldAnneeSortie = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        jTextFieldSiteWeb = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        jTextFieldNom = new javax.swing.JTextField();
+        jTextFieldLogin = new javax.swing.JTextField();
+        jTextFieldPrenom = new javax.swing.JTextField();
+        jTextFieldDateDeNaissance = new javax.swing.JTextField();
+        jTextFieldCodePostal = new javax.swing.JTextField();
         nomMenuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         connexionMenuItem = new javax.swing.JMenuItem();
@@ -85,6 +103,13 @@ public class InterfaceGraphique extends javax.swing.JFrame {
         jMenuInscription = new javax.swing.JMenuItem();
         jMenuModification = new javax.swing.JMenuItem();
         jMenuSuppr = new javax.swing.JMenuItem();
+        jMenuCV = new javax.swing.JMenu();
+        jMenuItemExpPro = new javax.swing.JMenuItem();
+        jMenuItemFormation = new javax.swing.JMenuItem();
+        jMenuItemInformatique = new javax.swing.JMenuItem();
+        jMenuItemLangue = new javax.swing.JMenuItem();
+        jMenuItemInteret = new javax.swing.JMenuItem();
+        jMenuPhoto = new javax.swing.JMenuItem();
         aideMenu = new javax.swing.JMenu();
         aproposMenuItem = new javax.swing.JMenuItem();
         nomjMenu = new javax.swing.JMenu();
@@ -95,95 +120,169 @@ public class InterfaceGraphique extends javax.swing.JFrame {
 
         desktopPane.setBorder(new javax.swing.border.MatteBorder(null));
 
-        jLabelSortie.setText("Année sortie promotion");
+        jButtonAccesCV.setText("Accèder à mon CV");
+        jButtonAccesCV.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAccesCVActionPerformed(evt);
+            }
+        });
 
-        jLabelNaiss.setText("Date de naissance");
+        jLabel3.setText("Nom");
 
-        jLabelRue.setText("Adresse rue");
+        jLabel4.setText("Prénom");
 
-        jLabelPostal.setText("Code postal");
+        jLabel5.setText("Login");
 
-        jLabelMail.setText("Mail");
+        jLabel6.setText("Année sortie promotion");
 
-        jLabelWeb.setText("Site web");
+        jLabel7.setText("Mot de passe");
 
-        jLabelEntree.setText("Année entrée promotion");
+        jLabel8.setText("Date de naissance");
 
-        jLabelVille.setText("Ville");
+        jLabel9.setText("Adresse rue");
 
-        jLabelTelPerso.setText("Téléphone personnel");
+        jLabel10.setText("Code postal");
 
-        jLabelTelPro.setText("Téléphone professionnel");
+        jLabel11.setText("Mail");
 
-        jLabelNom.setText("Nom");
+        jLabel12.setText("Site web");
 
-        jLabelPrenom.setText("Prénom");
+        jLabel13.setText("Année entrée promotion");
+
+        jLabel14.setText("Ville");
+
+        jLabel15.setText("Téléphone personnel");
+
+        jLabel16.setText("Téléphone professionnel");
+
+        jTextFieldLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldLoginActionPerformed(evt);
+            }
+        });
+
+        jTextFieldPrenom.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldPrenomActionPerformed(evt);
+            }
+        });
 
         org.jdesktop.layout.GroupLayout jPanel1Layout = new org.jdesktop.layout.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanel1Layout.createSequentialGroup()
-                .add(100, 100, 100)
-                .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(jLabelSortie)
-                    .add(jLabelEntree)
-                    .add(jLabelWeb)
-                    .add(jLabelMail)
-                    .add(jLabelTelPro)
-                    .add(jLabelNaiss)
-                    .add(jLabelVille)
-                    .add(jLabelPostal)
-                    .add(jLabelTelPerso)
-                    .add(jLabelRue))
-                .addContainerGap(123, Short.MAX_VALUE))
+                .add(148, 148, 148)
+                .add(jButtonAccesCV)
+                .addContainerGap(193, Short.MAX_VALUE))
             .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                 .add(jPanel1Layout.createSequentialGroup()
-                    .add(101, 101, 101)
+                    .add(13, 13, 13)
                     .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                        .add(jLabelNom)
-                        .add(jLabelPrenom))
-                    .addContainerGap(203, Short.MAX_VALUE)))
+                        .add(jLabel3)
+                        .add(jLabel5)
+                        .add(jLabel4)
+                        .add(jLabel14)
+                        .add(jLabel10)
+                        .add(jLabel9)
+                        .add(jLabel8)
+                        .add(jLabel7)
+                        .add(jLabel13)
+                        .add(jLabel12)
+                        .add(jLabel11)
+                        .add(jLabel16)
+                        .add(jLabel6)
+                        .add(jLabel15))
+                    .add(48, 48, 48)
+                    .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
+                        .add(jTextFieldNom)
+                        .add(jTextFieldPrenom)
+                        .add(jTextFieldLogin)
+                        .add(jTextFieldMotDePasse)
+                        .add(jTextFieldDateDeNaissance)
+                        .add(jTextFieldRue)
+                        .add(jTextFieldCodePostal)
+                        .add(jTextFieldVille)
+                        .add(jTextFieldTelPerso)
+                        .add(jTextFieldTelPro)
+                        .add(jTextFieldMail)
+                        .add(jTextFieldSiteWeb)
+                        .add(jTextFieldAnneEntree)
+                        .add(jTextFieldAnneeSortie, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 149, Short.MAX_VALUE))
+                    .addContainerGap(133, Short.MAX_VALUE)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanel1Layout.createSequentialGroup()
-                .add(52, 52, 52)
-                .add(jLabelNaiss)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jLabelRue)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jLabelPostal)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jLabelVille)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jLabelTelPerso)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jLabelTelPro)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jLabelMail)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jLabelWeb, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 14, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jLabelEntree)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jLabelSortie)
-                .addContainerGap(44, Short.MAX_VALUE))
+                .addContainerGap(496, Short.MAX_VALUE)
+                .add(jButtonAccesCV)
+                .addContainerGap())
             .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                 .add(jPanel1Layout.createSequentialGroup()
                     .addContainerGap()
-                    .add(jLabelNom)
+                    .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                        .add(jLabel3)
+                        .add(jTextFieldNom, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                     .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                    .add(jLabelPrenom)
-                    .addContainerGap(245, Short.MAX_VALUE)))
+                    .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                        .add(jTextFieldPrenom, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .add(jLabel4))
+                    .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                    .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                        .add(jTextFieldLogin, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .add(jLabel5))
+                    .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                    .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                        .add(jTextFieldMotDePasse, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 28, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .add(jLabel7))
+                    .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                    .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                        .add(jTextFieldDateDeNaissance, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .add(jLabel8))
+                    .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                    .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                        .add(jTextFieldRue, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .add(jLabel9))
+                    .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                        .add(jPanel1Layout.createSequentialGroup()
+                            .add(12, 12, 12)
+                            .add(jLabel10))
+                        .add(jPanel1Layout.createSequentialGroup()
+                            .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                            .add(jTextFieldCodePostal, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
+                    .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                    .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                        .add(jLabel14)
+                        .add(jTextFieldVille, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                    .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                    .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                        .add(jTextFieldTelPerso, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .add(jLabel15))
+                    .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                    .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                        .add(jTextFieldTelPro, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .add(jLabel16))
+                    .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                    .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                        .add(jTextFieldMail, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .add(jLabel11))
+                    .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                    .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                        .add(jTextFieldSiteWeb, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .add(jLabel12, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 14, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                    .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                    .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                        .add(jTextFieldAnneEntree, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .add(jLabel13))
+                    .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                    .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                        .add(jTextFieldAnneeSortie, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .add(jLabel6))
+                    .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
 
         desktopPane.add(jPanel1);
-        jPanel1.setBounds(70, 40, 340, 290);
-
-        jLabel1.setText("Voici les informations vous concernant");
-        desktopPane.add(jLabel1);
-        jLabel1.setBounds(100, 10, 340, 14);
+        jPanel1.setBounds(100, 40, 460, 530);
 
         fileMenu.setMnemonic('f');
         fileMenu.setText("Etudiants");
@@ -244,6 +343,43 @@ public class InterfaceGraphique extends javax.swing.JFrame {
 
         nomMenuBar.add(fileMenu);
 
+        jMenuCV.setText("Informations CV");
+
+        jMenuItemExpPro.setText("Experience pro");
+        jMenuCV.add(jMenuItemExpPro);
+
+        jMenuItemFormation.setText("Formation");
+        jMenuItemFormation.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemFormationActionPerformed(evt);
+            }
+        });
+        jMenuCV.add(jMenuItemFormation);
+
+        jMenuItemInformatique.setText("Informatique");
+        jMenuItemInformatique.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemInformatiqueActionPerformed(evt);
+            }
+        });
+        jMenuCV.add(jMenuItemInformatique);
+
+        jMenuItemLangue.setText("Langues");
+        jMenuCV.add(jMenuItemLangue);
+
+        jMenuItemInteret.setText("Centres d'intérêt");
+        jMenuCV.add(jMenuItemInteret);
+
+        jMenuPhoto.setText("Photo");
+        jMenuPhoto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuPhotoActionPerformed(evt);
+            }
+        });
+        jMenuCV.add(jMenuPhoto);
+
+        nomMenuBar.add(jMenuCV);
+
         aideMenu.setMnemonic('h');
         aideMenu.setText("Aide");
 
@@ -261,12 +397,15 @@ public class InterfaceGraphique extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(desktopPane, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 481, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+            .add(layout.createSequentialGroup()
+                .addContainerGap()
+                .add(desktopPane, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 625, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(28, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(layout.createSequentialGroup()
-                .add(desktopPane, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 359, Short.MAX_VALUE)
+                .add(desktopPane, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 582, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -316,13 +455,76 @@ public class InterfaceGraphique extends javax.swing.JFrame {
         majConnexion();
 
     }//GEN-LAST:event_jMenuSupprActionPerformed
+
+    private void jMenuItemInformatiqueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemInformatiqueActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItemInformatiqueActionPerformed
+
+    private void jButtonAccesCVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAccesCVActionPerformed
+        try {                                               
+            Etudiants etudiantEnvoi = null;
+            Cv_titre titreEnvoi = null;
+            
+            //titreEnvoi = DaoS4.titreDao().q
+            try {
+                etudiantEnvoi = DaoS4.etudiantsDao().queryForId(infoEtudiant.getLogin());
+            } catch (SQLException ex) {
+                Logger.getLogger(InterfaceGraphique.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            fenCV = new CVetudiant(this, true,etudiantEnvoi,null);
+            this.fenCV.setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(InterfaceGraphique.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButtonAccesCVActionPerformed
+
+    private void jMenuItemFormationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemFormationActionPerformed
+        try {                                                   
+            Etudiants etudiantEnvoi = null;
+            Cv_formation formation = null;
+            try {
+                etudiantEnvoi = DaoS4.etudiantsDao().queryForId(infoEtudiant.getLogin());
+            } catch (SQLException ex) {
+                Logger.getLogger(InterfaceGraphique.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            fenForm = new Formation_formulaire(this,true,etudiantEnvoi, formation);
+            this.fenForm.setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(InterfaceGraphique.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jMenuItemFormationActionPerformed
+
+    private void jTextFieldLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldLoginActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldLoginActionPerformed
+
+    private void jTextFieldPrenomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldPrenomActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldPrenomActionPerformed
+
+    private void jMenuPhotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuPhotoActionPerformed
+                                                 
+            try {                                           
+                
+                Etudiants etudiantEnvoi = null;
+                try {
+                    etudiantEnvoi = DaoS4.etudiantsDao().queryForId(infoEtudiant.getLogin());
+                } catch (SQLException ex) {
+                    Logger.getLogger(InterfaceGraphique.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                panneauPhoto = new PanneauPhoto(this,true,etudiantEnvoi);
+                panneauPhoto.setVisible(true);
+            } catch (SQLException ex) {
+                Logger.getLogger(InterfaceGraphique.class.getName()).log(Level.SEVERE, null, ex);
+            }
+    }//GEN-LAST:event_jMenuPhotoActionPerformed
     public void connecte(Etudiants etudiant) {
         //maj de l'etat de la connexion
         this.connecte = true;
         //ajout du nom dans la fenetre
         this.nomjMenu.setText("Connecté en tant que : " + etudiant.getLogin());
         this.nomjMenu.setEnabled(false);
-        jLabelEntree.setText(etudiant.getAnnee_entree_promo());
+     /*   jLabelEntree.setText(etudiant.getAnnee_entree_promo());
         jLabelNaiss.setText(etudiant.getDate_de_naissance());
         jLabelNom.setText(etudiant.getNom());
         jLabelPostal.setText(etudiant.getAdresse_cp());
@@ -333,14 +535,14 @@ public class InterfaceGraphique extends javax.swing.JFrame {
         jLabelSortie.setText(etudiant.getAnnee_sortie_promo());
         jLabelTelPerso.setText(etudiant.getTel_personnel());
         jLabelVille.setText(etudiant.getAdresse_ville());
-        jLabelWeb.setText(etudiant.getSite_web());
+        jLabelWeb.setText(etudiant.getSite_web());*/
         infoEtudiant = etudiant;
     }
 
     public void deconnecte() {
         this.connecte = false;
         this.nomjMenu.setText(null);
-        jLabelEntree.setText("Année entrée promotion");
+        /*jLabelEntree.setText("Année entrée promotion");
         jLabelNaiss.setText("Date de naissance");
         jLabelNom.setText("Nom");
         jLabelPostal.setText("Code postal");
@@ -351,7 +553,7 @@ public class InterfaceGraphique extends javax.swing.JFrame {
         jLabelSortie.setText("Année sortie promotion");
         jLabelTelPerso.setText("Téléphone personnel");
         jLabelVille.setText("Ville");
-        jLabelWeb.setText("Site web");
+        jLabelWeb.setText("Site web");*/
         jMenuModification.setEnabled(false);
     }
 
@@ -360,6 +562,8 @@ public class InterfaceGraphique extends javax.swing.JFrame {
         connexionMenuItem.setEnabled(!this.connecte);
         jMenuSuppr.setEnabled(connecte);
         jMenuModification.setEnabled(connecte);
+        jMenuCV.setEnabled(connecte);
+        jButtonAccesCV.setEnabled(connecte);
     }
 
     /**
@@ -404,25 +608,49 @@ public class InterfaceGraphique extends javax.swing.JFrame {
     private javax.swing.JMenuItem deconnexionMenuItem;
     private javax.swing.JDesktopPane desktopPane;
     private javax.swing.JMenu fileMenu;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabelEntree;
-    private javax.swing.JLabel jLabelMail;
-    private javax.swing.JLabel jLabelNaiss;
-    private javax.swing.JLabel jLabelNom;
-    private javax.swing.JLabel jLabelPostal;
-    private javax.swing.JLabel jLabelPrenom;
-    private javax.swing.JLabel jLabelRue;
-    private javax.swing.JLabel jLabelSortie;
-    private javax.swing.JLabel jLabelTelPerso;
-    private javax.swing.JLabel jLabelTelPro;
-    private javax.swing.JLabel jLabelVille;
-    private javax.swing.JLabel jLabelWeb;
+    private javax.swing.JButton jButtonAccesCV;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JMenu jMenuCV;
     private javax.swing.JMenuItem jMenuInscription;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItemExpPro;
+    private javax.swing.JMenuItem jMenuItemFormation;
+    private javax.swing.JMenuItem jMenuItemInformatique;
+    private javax.swing.JMenuItem jMenuItemInteret;
+    private javax.swing.JMenuItem jMenuItemLangue;
     private javax.swing.JMenuItem jMenuModification;
+    private javax.swing.JMenuItem jMenuPhoto;
     private javax.swing.JMenuItem jMenuSuppr;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JTextField jTextFieldAnneEntree;
+    private javax.swing.JTextField jTextFieldAnneeSortie;
+    private javax.swing.JTextField jTextFieldCodePostal;
+    private javax.swing.JTextField jTextFieldDateDeNaissance;
+    private javax.swing.JTextField jTextFieldLogin;
+    private javax.swing.JTextField jTextFieldMail;
+    private javax.swing.JTextField jTextFieldMotDePasse;
+    private javax.swing.JTextField jTextFieldNom;
+    private javax.swing.JTextField jTextFieldPrenom;
+    private javax.swing.JTextField jTextFieldRue;
+    private javax.swing.JTextField jTextFieldSiteWeb;
+    private javax.swing.JTextField jTextFieldTelPerso;
+    private javax.swing.JTextField jTextFieldTelPro;
+    private javax.swing.JTextField jTextFieldVille;
     private javax.swing.JMenuBar nomMenuBar;
     private javax.swing.JMenu nomjMenu;
     // End of variables declaration//GEN-END:variables
+
 }

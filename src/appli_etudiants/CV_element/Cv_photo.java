@@ -5,6 +5,7 @@
  */
 package appli_etudiants.CV_element;
 
+import appli_etudiants.Etudiants;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 import java.io.File;
@@ -24,26 +25,26 @@ import java.sql.SQLException;
 public class Cv_photo {
 
     @DatabaseField(id=true)
-    private Integer id_photo;
-    @DatabaseField
-    private String id_utilisateur;
+    private Integer id_cv_photo;
+    @DatabaseField(foreign = true,columnName = "id_utilisateur", foreignAutoRefresh = false)
+    private Etudiants etudiant;
     @DatabaseField
     private String photo;
+    
+    public Etudiants getEtudiant() {
+        return etudiant;
+    }
 
+    public void setEtudiant(Etudiants etudiant) {
+        this.etudiant = etudiant;
+    }
+    
     public Integer getId_photo() {
-        return id_photo;
+        return id_cv_photo;
     }
 
     public void setId_photo(Integer id_photo) {
-        this.id_photo = id_photo;
-    }
-
-    public String getId_utilisateur() {
-        return id_utilisateur;
-    }
-
-    public void setId_utilisateur(String id_utilisateur) {
-        this.id_utilisateur = id_utilisateur;
+        this.id_cv_photo = id_photo;
     }
 
     public String getPhoto() {

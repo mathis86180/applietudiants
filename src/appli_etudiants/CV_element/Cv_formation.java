@@ -5,6 +5,7 @@
  */
 package appli_etudiants.CV_element;
 
+import appli_etudiants.Etudiants;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
@@ -20,6 +21,17 @@ public class Cv_formation {
     private String id_utilisateur;
     @DatabaseField
     private String libelle_formation;
+    @DatabaseField(foreign = true,columnName = "id_utilisateur", foreignAutoRefresh = false)
+    private Etudiants etudiant;
+
+    public Etudiants getEtudiant() {
+        return etudiant;
+    }
+
+    public void setEtudiant(Etudiants etudiant) {
+        this.etudiant = etudiant;
+    }
+    
 
     public Integer getId_formation() {
         return id_formation;
