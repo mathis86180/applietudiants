@@ -44,7 +44,8 @@ public class DaoS4 {
 
     private DaoS4() {
         try {
-            DaoS4.databaseUrl="jdbc:mysql://localhost:3306/applietudiants?user=applietudiants&password=sio";
+            //DaoS4.databaseUrl="jdbc:mysql://localhost:3306/applietudiants?user=applietudiants&password=sio";
+			DaoS4.databaseUrl="jdbc:mysql://www.cnadal.fr/seigle_applietudiants?user=seigle_etudiants&password=sioapplietudiants";
             DaoS4.connectionSource = new JdbcConnectionSource(DaoS4.databaseUrl);
             DaoS4.personneDao = DaoManager.createDao(connectionSource, Personne.class);
             DaoS4.etudiantsDao = DaoManager.createDao(connectionSource, Etudiants.class);
